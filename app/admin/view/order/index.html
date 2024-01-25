@@ -1,0 +1,69 @@
+{extend name='base' /}
+{block name='title'}
+<title>支付设置</title>
+{/block}
+{block name="meta"}
+<style>
+th {
+  text-align: center !important;
+}
+.img1:hover{
+	transform: scale(10);
+	position: fixed;
+	z-index: 999;
+}
+.img1{
+	width: 1.5rem;
+	height: 1.5rem;
+	transition: all 0.6s;
+}
+</style>
+{/block}
+{block name='body'}
+<div class="x-nav">
+  <span class="layui-breadcrumb">
+    <a>首页</a>
+    <a>订单管理</a>
+    <a><cite>订单列表</cite></a>
+  </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()"
+    title="刷新">
+    <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<input type="hidden" id="groupid" name="groupid" value="0">
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-body ">
+          <form class="layui-form layui-col-space5">
+            <div class="layui-inline layui-show-xs-block">
+              <input class="layui-input" autocomplete="off" placeholder="关键词" name="keyword" id="keyword">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <select lay-filter="state" name="state">
+                <option value="">全部状态</option>
+                <option value="0">待付款</option>
+                <option value="1">待发货</option>
+                <option value="2">已发货</option>
+                <option value="3">交易成功</option>
+                <option value="4">已退款</option>
+                <option value="5">订单失效</option>
+              </select>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+          </form>
+        </div>
+        <div class="layui-card-body layui-table-body layui-table-main">
+          <table class="layui-table layui-form" id="datatable" lay-filter="datatable"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/order/index.js"></script>
+{/block}

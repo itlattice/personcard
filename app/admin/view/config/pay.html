@@ -1,0 +1,144 @@
+{extend name='base' /}
+{block name='title'}
+<title>支付设置</title>
+{/block}
+{block name="meta"}
+<style>
+th{
+    text-align: center !important;
+}
+</style>
+{/block}
+{block name='body'}
+<div class="x-nav">
+    <span class="layui-breadcrumb">
+        <a>首页</a>
+        <a>系统配置</a>
+        <a>
+            <cite>支付配置</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+        onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <table class="layui-table layui-form" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>支付通道</th>
+                                <th>官网地址</th>
+                                <th>手机网页</th>
+                                <th>电脑网页</th>
+                                <th>配置时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>支付宝官方
+                                </td>
+                                <td>
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-xs" onclick="window.open('https://www.alipay.com/')">去官网</span>
+                                </td>
+                                <td>
+                                    <span id="alipayWap" onclick="alipayWap()" class="layui-btn {if condition='$alipay.wap eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipay.wap eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>
+                                    <span id="alipayPc" onclick="alipayPc()" class="layui-btn {if condition='$alipay.pc eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipay.pc eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>超级管理员</td>
+                                <td class="td-status">
+                                    <span id="alipayState" onclick="alipayState()" class="layui-btn {if condition='$alipay.on eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipay.on eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td class="td-manage" style="text-align: center;">
+                                    <span class="layui-btn layui-btn-danger layui-btn-mini" onclick="payconfig('alipay')">配置</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>支付宝当面付
+                                </td>
+                                <td>
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-xs" onclick="window.open('https://www.alipay.com/')">去官网</span>
+                                </td>
+                                <td>
+                                    <span id="alipayCodeWap" onclick="alipayCodeWap()" class="layui-btn {if condition='$alipaycode.wap eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipaycode.wap eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>
+                                    <span id="alipayCodePc" onclick="alipayCodePc()" class="layui-btn {if condition='$alipaycode.pc eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipaycode.pc eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>超级管理员</td>
+                                <td class="td-status">
+                                    <span id="alipayCodeState" onclick="alipayCodeState()" class="layui-btn {if condition='$alipaycode.on eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$alipaycode.on eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td class="td-manage" style="text-align: center;">
+                                    <span class="layui-btn layui-btn-danger layui-btn-mini" onclick="payconfig('alipaycode')">配置</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>微信官方</td><td>
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="window.open('https://pay.weixin.qq.com/')">去官网</span></td>
+                                <td>
+                                    <span id="wechatWap" onclick="wechatWap()" class="layui-btn {if condition='$wechat.wap eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$wechat.wap eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>
+                                    <span id="wechatPc" onclick="wechatPc()" class="layui-btn {if condition='$wechat.pc eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$wechat.pc eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td>超级管理员</td>
+                                <td class="td-status">
+                                    <span id="wechatState" onclick="wechatState()" class="layui-btn {if condition='$wechat.on eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$wechat.on eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td class="td-manage" style="text-align: center;">
+                                    <span class="layui-btn layui-btn-danger layui-btn-mini" onclick="payconfig('wechat')">配置</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>易支付</td><td>
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="window.open('https://gz8.co/mpay')">去官网</span></td>
+                                <td>
+                                    <span id="eWap" onclick="eWap()" class="layui-btn {if condition='$epay.wap eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$epay.wap eq 1'}已启用{else /}已禁用{/if}</span></td>
+                                <td>
+                                    <span id="ePc" onclick="ePc()" class="layui-btn {if condition='$epay.pc eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$epay.pc eq 1'}已启用{else /}已禁用{/if}</span></td>
+                                <td>超级管理员</td>
+                                <td class="td-status">
+                                    <span id="epayState" onclick="epayState()" class="layui-btn {if condition='$epay.on eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$epay.on eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td class="td-manage" style="text-align: center;">
+                                    <span class="layui-btn layui-btn-danger layui-btn-mini" onclick="payconfig('epay')">配置</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>码支付</td><td>
+                                    <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="window.open('https://gz8.co/cdpay')">去官网</span></td>
+                                <td>
+                                    <span id="codeWap" onclick="codeWap()" class="layui-btn {if condition='$codepay.wap eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$codepay.wap eq 1'}已启用{else /}已禁用{/if}</span></td>
+                                <td>
+                                    <span id="codePc" onclick="codePc()" class="layui-btn {if condition='$codepay.pc eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$codepay.pc eq 1'}已启用{else /}已禁用{/if}</span></td>
+                                <td>超级管理员</td>
+                                <td class="td-status">
+                                    <span id="codeState" onclick="codeState()" class="layui-btn {if condition='$codepay.on eq 1'}layui-btn-normal{else /}layui-btn-danger{/if} layui-btn-mini">{if condition='$codepay.on eq 1'}已启用{else /}已禁用{/if}</span>
+                                </td>
+                                <td class="td-manage" style="text-align: center;">
+                                    <span class="layui-btn layui-btn-danger layui-btn-mini" onclick="payconfig('codepay')">配置</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <tip>*本系统推荐您使用官方接口，易支付及码支付接口仅作为无接入能力的用户使用（若您有其他接口推荐，也可以联系我们）,<font color="red">易支付跑路概率近年逐年上升，若无官方支付的，建议使用码支付</font>，若未使用官方接口造成财产损失或接口官方跑路无法收回资金的，本系统及工作室不承担相应责任及连带责任。</tip>
+                    <tip><br/>【若需要协助申请官方支付通道，可与客服联系（需提供营业执照、身份证、承诺书，部分地区的可能还需要租房合同或房产证、手持身份证照片，营业执照可协助办理（收费）】</tip>
+                    <br/>
+                    <tip style="font-size: 16px;font-weight: bold;">
+                    支付接口优先级：官方通道>码支付>易支付，所有通道均可配置，当同一个支付方式上级支付通道无法使用或未开启时将自动使用下一级。
+                    </tip>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/config/pay.js"></script>
+{/block}

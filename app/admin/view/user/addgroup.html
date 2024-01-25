@@ -1,0 +1,75 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+  body {
+    background-color: #fff;
+  }
+
+  .layui-form-item {
+    width: 70%;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+{if condition="$id eq 0"}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>添加用户组</legend>
+</fieldset>
+<form class="layui-form" action="" lay-filter="formTest">
+  <div class="layui-form-item">
+    <label class="layui-form-label">用户组名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="name" lay-verify="required" placeholder="请输入分组名称"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">排序</label>
+    <div class="layui-input-block">
+      <input type="number" name="sort" value="10" lay-verify="required" placeholder="请输入排序"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+</form>
+{else /}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>编辑用户组</legend>
+</fieldset>
+<form class="layui-form" action="" lay-filter="formTest">
+  <div class="layui-form-item">
+    <label class="layui-form-label">用户组名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="name" value="{$info.name}" lay-verify="required" placeholder="请输入分组名称"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">排序</label>
+    <div class="layui-input-block">
+      <input type="number" name="sort" value="{$info.sort}" lay-verify="required" placeholder="请输入排序"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+</form>
+{/if}
+
+{/block}
+{block name='script'}
+<script>
+  var form = [];
+  layui.use(['laydate', 'form'], function () {
+    form = layui.form;
+    form.render();
+  })
+</script>
+{/block}

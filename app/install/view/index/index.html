@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>在线安装懒猿自助售卡系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="renderer" content="webkit">
+    <link href="__STATIC__/install/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="container">
+    <!--<h1>-->
+    <!--    <img src="/assets/img/logo.png" style="width: 8rem;">-->
+    <!--</h1>-->
+    <h2>安装懒猿自助售卡系统</h2>
+    <div>
+
+        <form method="post" style="padding-top: 40px;">
+                        <div id="error" style="display:none"></div>
+            <div id="success" style="display:none"></div>
+            <div id="warmtips" style="display:none"></div>
+
+            <div class="form-group">
+                <div class="form-field">
+                    <label>MySQL数据库地址</label>
+                    <input type="text" name="mysqlHostname" value="127.0.0.1" required="">
+                </div>
+
+                <div class="form-field">
+                    <label>MySQL数据库名称</label>
+                    <input type="text" name="mysqlDatabase" value="" required="">
+                </div>
+
+                <div class="form-field">
+                    <label>MySQL用户名</label>
+                    <input type="text" name="mysqlUsername" value="root" required="">
+                </div>
+
+                <div class="form-field">
+                    <label>MySQL密码</label>
+                    <input type="password" name="mysqlPassword">
+                </div>
+                <div class="form-field">
+                    <label>MySQL端口号</label>
+                    <input type="number" name="mysqlHostport" value="3306" readonly>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-field">
+                    <label>管理员账号</label>
+                    <input name="adminUsername" value="admin" required=""/>
+                </div>
+
+                <div class="form-field">
+                    <label>管理员邮箱</label>
+                    <input name="adminEmail" value="admin@admin.com" required="">
+                </div>
+
+                <div class="form-field">
+                    <label>管理员密码</label>
+                    <input type="password" name="adminPassword" required="">
+                </div>
+
+                <div class="form-field">
+                    <label>管理员密码确认</label>
+                    <input type="password" name="adminPasswordConfirmation" required="">
+                </div>
+            </div>
+
+
+            <div class="form-buttons">
+                <!--@formatter:off-->
+                <button type="submit" >立即安装</button>
+                <!--@formatter:on-->
+            </div>
+        </form>
+
+        <!-- jQuery -->
+        <script src="__STATIC__/js/jquery.min.js"></script>
+
+        <script>
+            $(function () {
+                $('form :input:first').select();
+
+                $('form').on('submit', function (e) {
+                    e.preventDefault();
+                    var form = this;
+                    var $error = $("#error");
+                    var $success = $("#success");
+                    var $button = $(this).find('button')
+                        .text("安装中...")
+                        .prop('disabled', true);
+                    $.ajax({
+                        url: "/install.php?s=Index/start",
+                        type: "POST",
+                        dataType: "json",
+                        data: $(this).serialize(),
+                        success: function (ret) {
+                            if (ret.code == 1) {
+                                var data = ret.data;
+                                $error.hide();
+                                $(".form-group", form).remove();
+                                $button.remove();
+                                $("#success").text(ret.msg).show();
+
+                                $buttons = $(".form-buttons", form);
+                                $("<a class='btn' href='./'>访问首页</a>").appendTo($buttons);
+
+                                if (typeof data.adminName !== 'undefined') {
+                                    var url = location.href.replace(/install\.php/, data.adminName);
+                                    $("#warmtips").html("温馨提示：请将以下后台登录入口添加到你的收藏夹，为了你的安全，不要泄漏或发送给他人！如有泄漏请及时修改！" + '<a href="' + url + '">' + url + '</a>').show();
+                                    $('<a class="btn" href="' + url + '" id="btn-admin" style="background:#18bc9c">' + "进入后台" + '</a>').appendTo($buttons);
+                                }
+                                localStorage.setItem("fastep", "installed");
+                            } else {
+                                $error.show().text(ret.msg);
+                                $button.prop('disabled', false).text("点击安装");
+                                $("html,body").animate({
+                                    scrollTop: 0
+                                }, 500);
+                            }
+                        },
+                        error: function (xhr) {
+                            $error.show().text(xhr.responseText);
+                            $button.prop('disabled', false).text("点击安装");
+                            $("html,body").animate({
+                                scrollTop: 0
+                            }, 500);
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>

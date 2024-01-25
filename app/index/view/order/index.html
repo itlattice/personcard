@@ -1,0 +1,131 @@
+{extend name="base" /}
+{block name="title"}
+<title>{$webConfig.title} - {$webConfig.slogan}</title>
+<meta name="Keywords" content="{$webConfig.keyword}">
+<meta name="Description" content="{$webConfig.desc}">
+<style>
+    .header .header-box .query a {
+        max-width: 45%;
+    }
+</style>
+<link rel="stylesheet" href="__ASSETS__/page/css/order.css">
+{/block}
+
+{block name='body'}
+<div id="content">
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box">
+                    <div class="pay-title" style="padding-bottom: 14px;">
+                        <svg style="margin-bottom: -6px;" t="1603120404646" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1611" width="27" height="27"> <path d="M320.512 428.032h382.976v61.44H320.512zM320.512 616.448h320.512v61.44H320.512z" fill="#00EAFF" p-id="1612" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path>
+                            <path d="M802.816 937.984H221.184l-40.96-40.96V126.976l40.96-40.96h346.112l26.624 10.24 137.216 117.76 98.304 79.872 15.36 31.744v571.392l-41.984 40.96z m-540.672-81.92h500.736V345.088L677.888 276.48 550.912 167.936H262.144v688.128z" fill="#3C8CE7" p-id="1613" data-spm-anchor-id="a313x.7781069.0.i0" class=""></path>
+                        </svg>
+                        订单列表
+                    </div>
+                    <div class="layui-card-body">
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title">
+                                <li class="{if condition='$type eq "myorder"'}layui-this{/if} browser-btn"><a href="/order.html">{if condition="$uid eq 0"}浏览器缓存{else /}我的订单{/if}</a></li>
+                                <li class="{if condition='$type eq "voucher"'}layui-this{/if} email-btn"><a href="/order.html?type=voucher">凭证查询</a></li>
+                                <li class="{if condition='$type eq "orderno"'}layui-this{/if} order-btn"><a href="/order.html?type=orderno">订单号查询</a></li>
+                            </ul>
+                            <div class="layui-tab-content" style="text-align: center">
+                                <!-- 浏览器缓存 -->
+                                <div class="layui-tab-item layui-show browser-box" style="text-align: left">
+                                    <!-- 邮箱查询 -->
+                                    <div id="list"></div>
+                                    <p class="loading" data-loading="0" id="loading" style="display: none;">加载中...</p>
+                                    {if condition='$type eq "myorder"'}
+                                    <input type="hidden" id="ordertype" name="type" value="{$type}">
+                                    {/if}
+
+                                    {if condition="$type eq 'voucher'"}
+                                    <div style="text-align: center;" id="orderlist">
+                                        <div class="layui-form" action="" method="post">
+                                            <input type="hidden" id="ordertype" name="type" value="{$type}">
+                                            <div class="entry">
+                                                <span class="l-msg">下单账号:</span>
+                                                <label class="input">
+                                                    <input type="text" name="account" required="" lay-verify="required" placeholder="请输入下单账号" autocomplete="off">
+                                                </label>
+                                            </div>
+                                            <div class="entry">
+                                                <span class="l-msg">查单密码:</span>
+                                                <label class="input">
+                                                    <input type="password" name="password" required="" lay-verify="required" placeholder="请输入查单密码" autocomplete="off">
+                                                </label>
+                                            </div>
+                                            <div class="entry" style="display: flow-root;">
+                                                <span class="l-msg">验证码:</span>
+                                                <label class="input">
+                                                    <input type="text" name="code" style="width: 180px;" required="" lay-verify="required" placeholder="请输入验证码" autocomplete="off">
+                                                    <img src="/captcha" style="height: 36px;" onclick="$(this).attr('src','/captcha?'+Math.random())">
+                                                </label>
+                                            </div>
+                                            <div class="btn">
+                                                <button id="submitbtn" lay-submit="" lay-filter="submitbtn">
+                                                    立即查询
+                                                </button>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                    {/if}
+                                    {if condition="$type eq 'orderno'"}
+                                    <!-- 订单号查询 -->
+                                    <div style="text-align: center;" id="orderlist">
+                                        <div class="layui-form" action="" method="post">
+                                            <input type="hidden" id="ordertype" name="type" value="orderno">
+                                            <div class="entry">
+                                                <span class="l-msg">订单号:</span>
+                                                <label class="input">
+                                                    <input type="text" name="orderno" required="" lay-verify="required" placeholder="请输入订单号" autocomplete="off">
+                                                </label>
+                                            </div>
+                                            <div class="entry" style="display: flow-root;">
+                                                <span class="l-msg">验证码:</span>
+                                                <label class="input">
+                                                    <input type="text" name="code" style="width: 180px;" required="" lay-verify="required" placeholder="请输入验证码" autocomplete="off">
+                                                    <img src="/captcha" style="height: 36px;" onclick="$(this).attr('src','/captcha?'+Math.random())">
+                                                </label>
+                                            </div>
+                                            <div class="btn">
+                                                <button id="submitbtn" lay-submit="" lay-filter="submitbtn">
+                                                    立即查询
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="order-empty" style="text-align: center; display: none; padding-bottom: 15px;">
+                        <img src="__ASSETS__/svg/order.svg" />
+                        <div class="err_title">暂时还没有任何订单。</div>
+                        <div class="err_content">您可以去
+                            <a href="/" style="color: #737373; text-decoration: underline;">查看或购买喜欢的商品</a>
+                        </div>
+                        <div class="btn">
+                            <a href="javascript:history.back(-1);">
+                                <span>返回</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/js/order.js"></script>
+{if condition='$type eq "myorder"'}
+<script>
+  load();
+</script>
+{/if}
+{/block}

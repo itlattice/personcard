@@ -1,0 +1,15 @@
+html{overflow-x:hidden;overflow-y:scroll;*background-image:url(about:blank);*background-attachment:fixed;} 
+body{color:#333;font:12px/1.4 '\5FAE\8F6F\96C5\9ED1',microsoft yahei,"宋体",Arial,sans-serif;background:#fff;}
+li{list-style:none;}
+*{margin:0;padding:0;}
+.qr_top{background:#f2f2f2;line-height:45px;height:45px;width: 80%;margin: 40px auto 0 auto;border:#ccc solid 1px;border-bottom:0;}
+.qr_top li{float:left;width:62%;color:#333;padding-left:20px;}
+.qr_top b{font-size:18px;color:#ff6600;}
+.qr_top a{font-size:16px;color:#333;text-decoration:none;}
+.qr_info{border:#e4e4e4 solid 1px;border-top:#ccc solid 1px;text-align:center;padding:40px 0;width: 80%;margin: 0px auto;}
+.qr_info .box{width:670px;display:inline-block; }
+.qr_info .box cite{float:left;display:inline;margin:20px 0 0 4px;border:#ddd solid 1px;text-align:center;width:298px;height:298px;overflow:hidden;}
+.qr_info .links{width: 670px;display:inline-block;text-align:left;}
+.qr_info .links span{width:300px;display:inline-block;text-align:center;}
+.qr_info .links a{color:#999;}
+.qr_info .links a:hover{color:#666;}

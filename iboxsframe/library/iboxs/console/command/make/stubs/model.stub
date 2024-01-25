@@ -1,0 +1,10 @@
+<?php
+
+namespace {%namespace%};
+
+use iboxs\Model;
+
+class {%className%} extends Model
+{
+    //
+}

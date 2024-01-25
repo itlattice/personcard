@@ -1,0 +1,31 @@
+layui.use(['form'],function(){
+    var form=layui.form;
+    form.on('submit(config)',function(data){
+        if(data.field.oldpwd.length<1){
+            layer.msg('旧密码错误');
+            return;
+        }
+        if(data.field.pwd.length<6){
+            layer.msg('新密码长度不能低于6位');
+            return;
+        }
+        if(data.field.pwd!=data.field.again){
+            layer.msg('两次密码输入不一致');
+            return;
+        }
+        var pwd=hex_md5(data.field.pwd);
+        ajax({
+            url:'/admin/info/udpwd',
+            data:{
+                pwd:pwd,
+                old:hex_md5(data.field.oldpwd)
+            },
+            success:function(res){
+                layer.msg(res.msg);
+                if(res.code==0){
+                    setTimeout(function(){parent.layer.closeAll();},1500);
+                }
+            }
+        })
+    })
+})

@@ -1,0 +1,51 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+  body {
+    background-color: #fff;
+  }
+
+  .layui-form-item {
+    width: 70%;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+<input type="hidden" id="userid" name="id" value="{$id}">
+<input type="hidden" id="groupid" name="groupid" value="0">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>用户列表[分组:{$groupname}]</legend>
+</fieldset>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="move"><i
+        class="layui-icon">&#xe61f;</i>转移会员组</button>
+  </div>
+</script>
+<div class="layui-fluid" style="padding-top: 0;">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-body layui-table-body layui-table-main">
+            <table class="layui-table layui-form" id="datatable" lay-filter="datatable"></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/user/groupuser.js"></script>
+{/block}

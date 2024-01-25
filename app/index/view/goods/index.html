@@ -1,0 +1,189 @@
+{extend name="base" /}
+{block name="title"}
+<title>{$webConfig.title} - {$webConfig.slogan}</title>
+<meta name="Keywords" content="{$webConfig.keyword}">
+<meta name="Description" content="{$webConfig.desc}">
+<style>
+    .header .header-box .query a {
+        max-width: 45%;
+    }
+</style>
+<link rel="stylesheet" href="__ASSETS__/page/css/goods.css">
+{/block}
+{block name='body'}
+<div id="content">
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box">
+                    <div class="title" style="border-bottom: 1px solid #f7f7f7;padding-bottom: 5px">
+                        <embed class="svg" src="__ASSETS__/svg/spxq.svg" type="image/svg+xml" />
+                        <span>商品详情</span>
+                    </div>
+                    <div class="layui-col-md4 layui-col-sm12">
+                        <div class="goods-img">
+                            <img class="viewer-pictures" src="{$goods.img}" onerror="javascript:this.src='__ASSETS__/img/none.jpg';"
+                                alt="">
+                        </div>
+                    </div>
+                    <div class="layui-form layui-form-pane" lay-filter="formtext">
+                        <input type="hidden" name="goods_id" id="goods_id" value="{$goods.gid}">
+                        <div class="layui-col-md8 layui-col-sm12">
+                            <div class="goods-msg">
+                                <div class="goods-name">
+                                    <embed class="svg" style="vertical-align: middle;" src="__ASSETS__/svg/spmc.svg"
+                                        type="image/svg+xml" />
+                                    <span>
+                                        {$goods.name} 
+                                        {if condition="$goods.type eq 1"}
+                                        <span class="small-tips tips-yellow" style="background: #ec1212; color: #fff;">非卡密</span>
+                                        {/if}
+                                        {if condition="$goods.is_head eq 0"}
+                                        <span class="small-tips tips-yellow" style="background: #5fb878; color: #fff;">自动发货</span>
+                                        {else /}
+                                        <span class="small-tips tips-yellow" style="background: #ff5722; color: #fff;">手动发货</span>
+                                        {/if}
+                                        <span class="small-tips tips-blue">库存(<span id="stockId">{$goods.stock}</span>)</span>
+                                    </span>
+                                </div>
+                                <div class="price">
+                                    <span class="price-sign">￥</span>
+                                    <span class="price-num" id="salePrice">{$price}</span>
+                                    <span class="price-c">[<del id="fromPrice">￥{$fromprice}</del>]</span>
+                                </div>
+
+                                <?php
+                                $height=-25;
+                                $count=round(count($goods['specs'])/3);
+                                $height=$count*(-25);
+                                ?>
+
+                                <div class="entry">
+                                    <span class="l-msg" style="margin-top: {$height}px;">商品规格：</span>
+                                    <div class="input-group order-number-box" style="width: 60%;">
+                                        <ul class="specsbox">
+                                            {volist name="$goods.specs" id="vo"}
+                                            <li class="box" onclick="specsClick({$vo.gsid},this)" data-id="{$vo.gsid}">{$vo.name}</li>
+                                            {/volist}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="specsinfo" name="specs" value="0">
+                                
+                                <div class="entry notSelection">
+                                    <span class="l-msg" style="margin-top: -30px;">购买数量：</span>
+                                    <div class="input-group order-number-box">
+                                        <div class="input-group-prepend sub">
+                                            <button class="btn btn-decrement btn-outline-secondary"
+                                                type="button">-</button>
+                                        </div>
+                                        <input type="text" id="orderNumber" name="goods_num" style="text-align: center"
+                                            class="form-control order-number" required=""
+                                            lay-verify="required|order_number" value="1">
+                                        <div class="input-group-append add">
+                                            <button class="btn btn-increment btn-outline-secondary"
+                                                type="button">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                {if condition="$goods.is_pwd eq 1"}
+                                <div class="entry">
+                                    <span class="l-msg">购买密码：</span>
+                                    <label class="input">
+                                        <input type="text" name="shoppassword" required lay-verify="required"
+                                            placeholder="请输入商品购买密码" value="">
+                                    </label>
+                                </div>
+                                {/if}
+                                {if condition="$sysConfig.order.usr eq 1"}
+                                <div class="entry">
+                                    <span class="l-msg">下单账号：</span>
+                                    <label class="input">
+                                        <input type="text" name="account" required lay-verify="required"
+                                            placeholder="{$sysConfig.order.usrtip}" value="">
+                                    </label>
+                                </div>
+                                {/if}
+
+                                {if condition="$sysConfig.order.pwd eq 1"}
+                                <div class="entry">
+                                    <span class="l-msg">查询密码：</span>
+                                    <label class="input">
+                                        <input type="text" name="password" required lay-verify="required"
+                                            placeholder="{$sysConfig.order.pwdtip}" value="">
+                                    </label>
+                                </div>
+                                {/if}
+                                {if condition="$sysConfig['order']['email']??0 eq 1"}
+                                <div class="entry">
+                                    <span class="l-msg">接收发货：</span>
+                                    <label class="input">
+                                        <input type="checkbox" lay-skin="primary" lay-filter="emailcheck" name="emailcheck" title="邮件接收">
+                                    </label>
+                                </div>
+                                <div class="entry" id="emailid" style="display:none;">
+                                    <span class="l-msg">邮箱：</span>
+                                    <label class="input">
+                                        <input type="text" name="email" required placeholder="请输入邮箱" value="">
+                                    </label>
+                                </div>
+                                {/if}
+                            </div>
+                            <div class="layui-col-sm6 buy">
+                                {if condition="$goods.stock eq 0"}
+                                <div class="no-stock" style=""><span>库存不足</span></div>
+                                {elseif condition="$goods.is_sale eq 0" /}
+                                <div class="no-stock" style=""><span>已下架</span></div>
+                                {else /}
+                                <button id="yesStock" lay-submit="" lay-filter="config"><span>立即下单</span></button>
+                                <div id="noStock" class="no-stock" style="display: none;"><span>库存不足</span></div>
+                                {/if}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box">
+                    <div class="title" style="border-bottom: 1px solid #f7f7f7;padding-bottom: 5px">
+                        <embed class="svg" src="__ASSETS__/svg/spjs.svg" type="image/svg+xml" />
+                        <span>商品介绍</span>
+                    </div>
+                    <div class="intro">
+                        {if condition="$goods.details eq ''|| $goods.details eq null"}
+                        <p>还没有为该商品添加介绍哦~</p>
+                        {else /}
+                        {$goods.details|raw}
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var stock = {$goods.stock};
+    window.onload = function () {}
+</script>
+</div>
+{/block}
+{block name='script'}
+{if condition="($sysConfig.goodswindows neq '' || $goods.window neq '') && checkCookie('goodswindows')"}
+<script>
+    layui.use(['layer'],function(){
+        var layer=layui.layer;
+        layer.open({
+            type:2,
+            area:['800px','500px'],
+            content:'/openwindow?key=goodswindows&id={$goods.gid}',
+            title:'请注意'
+        })
+    })
+</script>
+{/if}
+<script src="__ASSETS__/page/index/goods.js"></script>
+{/block}

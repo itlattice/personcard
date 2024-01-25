@@ -1,0 +1,149 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+  body {
+    background-color: #fff;
+  }
+
+  .layui-form-item {
+    width: 70%;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  .icon{
+    width: 3rem;
+    height: 3rem;
+  }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+{if condition="$id eq 0"}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>添加商品分类</legend>
+</fieldset>
+<form class="layui-form" action="" lay-filter="formTest">
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类名称<span style="color: red;">*</span></label>
+    <div class="layui-input-block">
+      <input type="text" name="name" lay-verify="required" placeholder="请输入分类名称"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类排序<span style="color: red;">*</span></label>
+    <div class="layui-input-block">
+      <input type="number" name="sort" value="10" lay-verify="required" placeholder="请输入排序"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类图标</label>
+    <div class="layui-input-block">
+      <button type="button" class="layui-btn" id="icon"><i class="layui-icon"></i>上传文件</button>
+      <input type="hidden" name="icon" id="iconUrl" value="">
+      <img src="" class="icon" id="iconImg" style="display:none;">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">商品排序方式</label>
+    <div class="layui-input-block">
+      <select lay-filter="goods_sort" name="goods_sort">
+        <option value="0">默认排序</option>
+        <option value="1">添加时间降序</option>
+        <option value="2">添加时间升序</option>
+        <option value="3">商品价格降序</option>
+        <option value="4">商品价格升序</option>
+        <option value="5">商品销量降序</option>
+        <option value="6">商品销量升序</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类说明</label>
+    <div class="layui-input-block">
+        <textarea class="layui-textarea" rows="3" name="dec"></textarea>
+    </div>
+  </div>
+</form>
+{else /}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>编辑商品分类</legend>
+</fieldset>
+<form class="layui-form" action="" lay-filter="formTest">
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类名称<span style="color: red;">*</span></label>
+    <div class="layui-input-block">
+      <input type="text" name="name" value="{$info.name}" lay-verify="required" placeholder="请输入分类名称"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类排序<span style="color: red;">*</span></label>
+    <div class="layui-input-block">
+      <input type="number" name="sort" value="{$info.sort}" lay-verify="required" placeholder="请输入排序"
+        autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类图标</label>
+    <div class="layui-input-block">
+      <button type="button" class="layui-btn" id="icon"><i class="layui-icon"></i>上传文件</button>
+      <input type="hidden" name="icon" id="iconUrl" value="{$info.icon}">
+      <img src="{$info.icon}" class="icon" id="iconImg" {if condition="$info.icon eq ''"}style="display:none;"{else /}style="display:block;"{/if}>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">商品排序方式</label>
+    <div class="layui-input-block">
+      <select lay-filter="goods_sort" name="goods_sort">
+        <option value="0" {if condition="$info.goods_sort eq 0"}selected=""{/if}>默认排序</option>
+        <option value="1" {if condition="$info.goods_sort eq 1"}selected=""{/if}>添加时间降序</option>
+        <option value="2" {if condition="$info.goods_sort eq 2"}selected=""{/if}>添加时间升序</option>
+        <option value="3" {if condition="$info.goods_sort eq 3"}selected=""{/if}>商品价格降序</option>
+        <option value="4" {if condition="$info.goods_sort eq 4"}selected=""{/if}>商品价格升序</option>
+        <option value="5" {if condition="$info.goods_sort eq 5"}selected=""{/if}>商品销量降序</option>
+        <option value="6" {if condition="$info.goods_sort eq 6"}selected=""{/if}>商品销量升序</option>
+      </select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类说明</label>
+    <div class="layui-input-block">
+        <textarea class="layui-textarea" rows="3" name="dec">{$info.dec}</textarea>
+    </div>
+  </div>
+</form>
+{/if}
+
+{/block}
+{block name='script'}
+<script>
+  var form = [];
+  layui.use(['laydate', 'form','upload'], function () {
+    form = layui.form;
+    upload=layui.upload;
+    form.render();
+
+    upload.render({
+      elem: '#icon'
+      ,url: '/admin/common/upload?type=goodstype' //此处配置你自己的上传接口即可
+      ,accept: 'file' //普通文件
+      ,exts: 'png|jpg|jpeg|bng'
+      ,done: function(res){
+        layer.msg('上传成功');
+        console.log(res);
+        $('#iconImg').attr('src',res.data.src).show();
+        $('#iconUrl').val(res.data.src);
+      }
+    });
+  })
+</script>
+{/block}

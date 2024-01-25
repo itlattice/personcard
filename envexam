@@ -1,0 +1,10 @@
+APP_HOST = ''
+APPTYPE = 2
+APPVER = '{appver}'
+
+[DATABASE]
+HOSTNAME = '{host}'
+DATABASE = '{data}'
+USERNAME = '{usr}'
+PASSWORD = '{pwd}'
+HOSTPROT = 3306

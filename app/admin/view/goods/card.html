@@ -1,0 +1,70 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    .layui-form-item {
+        width: 70%;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+<input type="hidden" id="goodsid" name="goodsid" value="{$_GET['id']??0}">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>卡密列表[{$name}]</legend>
+</fieldset>
+
+<div class="layui-fluid" style="padding-top: 0;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <form class="layui-form layui-col-space5" style="display: flex;">
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="关键词" name="keyword" id="keyword">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <select lay-filter="state" name="state">
+                                <option value="-1">全部卡密</option>
+                                <option value="0">未使用</option>
+                                <option value="2">已使用</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <select lay-filter="gpid" name="gpid">
+                                {volist name='specs' id='vo'}
+                                <option value="{$vo.gsid}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i
+                                    class="layui-icon">&#xe615;</i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-card-body layui-table-body layui-table-main">
+                    <table class="layui-table layui-form" id="datatable" lay-filter="datatable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/goods/card.js"></script>
+{/block}

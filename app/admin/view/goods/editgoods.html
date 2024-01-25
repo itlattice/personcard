@@ -1,0 +1,456 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+  body {
+    background-color: #fff;
+  }
+
+  .layui-form-item {
+    width: 70%;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  .icon{
+    width: 3rem;
+    height: 3rem;
+  }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+<div class="layui-form" action="" lay-filter="formTest">
+  <div class="layui-tab">
+    <ul class="layui-tab-title">
+      <li class="layui-this">基础设置</li>
+      <li>价格设置</li>
+      <li>内容设置</li>
+      <li>弹窗设置</li>
+      <li>其他信息</li>
+    </ul>
+    <div class="layui-tab-content">
+      <div class="layui-tab-item layui-show">
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品分类</label>
+          <div class="layui-input-block">
+            <select lay-filter="gtid" name="gtid">
+              {volist id="vo" name="type"}
+              <option value="{$vo.gtid}" {if condition="$vo.gtid eq $info.gtid"}selected=''{/if}>{$vo.name}</option>
+              {/volist}
+            </select>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品名称<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="text" name="name" maxlength="60" lay-verify="required" placeholder="请输入商品名称"
+              autocomplete="off" value="{$info.name}" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">一口价<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="number" name="price" value="{$info.price}" lay-verify="required" placeholder="请输入一口价"
+              autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">发货方式</label>
+            <div class="layui-input-block">
+                <input type="radio" name="is_head" lay-filter="is_head" value="0" title="自动发货" {if condition="$info.is_head eq 0"} checked=''{/if}>
+                <input type="radio" name="is_head" lay-filter="is_head" value="1" title="手动发货" {if condition="$info.is_head eq 1"} checked=''{/if}>
+            </div> 
+        </div>
+        <div class="layui-form-item" id="stockid" {if condition="$info.is_head eq 0"} style="display: none;" {else /}style="display:block;"{/if}>
+          <label class="layui-form-label">库存<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="number" name="stock" maxlenth="3" lay-verify="required" placeholder="请输入库存数"
+              autocomplete="off" value="{$info.stock}" class="layui-input">
+          </div>
+        </div>
+        <!-- <div class="layui-form-item">
+          <label class="layui-form-label">附加选项</label>
+          <div class="layui-input-block">
+            <select lay-filter="other" name="other">
+              
+            </select>
+          </div>
+        </div> -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="0" title="卡密" {if condition="$info.type eq 0"}checked=''{/if}>
+                <input type="radio" name="type" value="1" title="链接" {if condition="$info.type eq 1"}checked=''{/if}>
+                <input type="radio" name="type" value="-1" disabled="" title="租号(暂不支持)">
+            </div> 
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="is_sale" value="1" title="上架" {if condition="$info.is_sale eq 1"}checked=''{/if}>
+                <input type="radio" name="is_sale" value="0" title="下架" {if condition="$info.is_sale eq 0"}checked=''{/if}>
+            </div> 
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品主图</label>
+            <div class="layui-input-block" style="display: flex;">
+              <input type="text" readonly name="img" value="{$info.img}" id="goodsimg" lay-verify="required" class="layui-input">
+              <button class="layui-btn" id="uploadimg">上传</button>
+            </div> 
+            <div class="layui-input-block" style="display: none;" id="uploadinfos">
+              <img src="" id="uploadinfo" style="height: 5rem;">
+            </div> 
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品排序<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="number" name="sort" value="{$info.sort}" lay-verify="required" value="10" class="layui-input">
+          </div>
+        </div>
+
+      </div>
+      <div class="layui-tab-item">
+
+        <section class="layui-col-md10" style="margin: 0 auto; float: none;">
+          <div class="layui-card">
+            <!-- <div class="layui-card-header">基于 layui table 添加一行并实现在编辑行记录后保存数据的方法</div> -->
+            <div class="layui-card-body layui-text">
+              <div id="toolbar">
+                  <div>
+                      <button type="button" class="layui-btn layui-btn-sm" data-type="addRow" title="添加一行">
+                          <i class="layui-icon layui-icon-add-1"></i> 添加规格
+                      </button>
+                  </div>
+              </div>
+              <div id="tableRes" class="table-overlay">
+                  <table id="dataTable" lay-filter="dataTable" class="layui-hide"></table>
+              </div>
+              <div id="action" class="text-center" style="display: none;">
+                  <button id="saveBtn" type="button" name="btnSave" class="layui-btn" data-type="save"><i class="layui-icon layui-icon-ok-circle"></i>保存</button>				
+              </div>
+            </div>
+          </div>
+          
+          <!--保存结果输出-->		
+          <div class="layui-card" style="display: none;">
+              <div class="layui-card-header">保存结果输出</div>			
+              <div class="layui-card-body layui-text">						
+                  <blockquote class="layui-elem-quote layui-quote-nm">
+                      <pre id="jsonResult"><span class="layui-word-aux">请点击“保存”后查看输出信息……</span></pre>
+                  </blockquote>
+              </div>
+          </div>
+        </section>
+
+      </div>
+      <div class="layui-tab-item">
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品详情<span style="color: red;">*</span></label>
+          <div class="layui-input-block" style="width: 550px;">
+            <textarea id="viewinfo" name="viewinfo">{$info.details}</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="layui-tab-item">
+        <div class="layui-form-item">
+          <label class="layui-form-label">商品页弹窗<span style="color: red;">*</span></label>
+          <div class="layui-input-block" style="width: 550px;">
+            <textarea id="windowinfo" name="windowinfo">{$info.window}</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="layui-tab-item">
+        <div class="layui-form-item">
+          <label class="layui-form-label">虚拟销量<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="number" value="0" name="sale" value="{$info.sale}" maxlenth="3" lay-verify="required" placeholder="请输入虚拟销量"
+              autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">需要登录<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="radio" name="is_login" value="1" title="需要" {if condition="$info.is_login eq 1"} checked=""{/if}>
+            <input type="radio" name="is_login" value="0" title="不需要" {if condition="$info.is_login eq 0"} checked=""{/if}>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">需要密码<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="radio" name="is_pwd" value="1" lay-filter="is_pwd" title="需要" {if condition="$info.is_pwd eq 1"} checked=""{/if}>
+            <input type="radio" name="is_pwd" value="0" lay-filter="is_pwd" title="不需要" {if condition="$info.is_pwd eq 0"} checked=""{/if}>
+          </div>
+        </div>
+        <div class="layui-form-item" id="salepwd" style="display: none;">
+          <label class="layui-form-label">购买密码<span style="color: red;">*</span></label>
+          <div class="layui-input-block">
+            <input type="text" name="pwd" lay-verify="required" value="{$info.pwd}" maxlength="32" placeholder="请输入购买密码"
+              autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-form-item" id="salepwd" style="display: none;">
+          <label class="layui-form-label">商品说明</label>
+          <div class="layui-input-block">
+            <textarea name="dec" class="layui-textarea" rows="3">{$info.dec}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/block}
+{block name='script'}
+<script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+  window.viewObj = {
+		tbData: {$price|raw},
+		typeData: [
+			{id: 1, name: '分类一'},
+			{id: 2, name: '分类二'},
+			{id: 3, name: '分类三'},
+			{id: 4, name: '分类四'}
+		],
+		renderSelectOptions: function(data, settings){
+			settings =  settings || {};
+			var valueField = settings.valueField || 'value',
+				textField = settings.textField || 'text',
+				numberField = settings.numberField || 'number',
+				selectedValue = settings.selectedValue || "";
+			var html = [];
+			for(var i=0, item; i < data.length; i++){
+				item = data[i];
+				html.push('<option value="');
+				html.push(item[valueField]);
+				html.push('"');
+				if(selectedValue && item[valueField] == selectedValue ){						
+					html.push(' selected="selected"');
+				}			
+				html.push('>');		
+				html.push(item[textField]);
+				html.push('</option>');
+			}
+			return html.join('');
+		}
+	};
+
+  var viewinfo = UE.getEditor('viewinfo');
+  viewinfo.ready(function () {
+    viewinfo.setHeight(300);
+  });
+
+  var windowinfo = UE.getEditor('windowinfo');
+  windowinfo.ready(function () {
+    windowinfo.setHeight(300);
+  });
+
+  var forms = [];
+  var active;
+  layui.use(['laydate', 'form','upload'], function () {
+    forms = layui.form;
+    upload=layui.upload;
+    forms.render();
+    form=layui.form;
+    var $ = layui.jquery
+    ,element = layui.element
+    ,layer = layui.layer;
+
+    form.on('radio(is_pwd)',function(data){
+      console.log(data);
+      var value=data.value;
+      if(value>0){
+        $('#salepwd').show();
+      } else{
+        $('#salepwd').hide();
+      }
+    })
+    
+    form.on('radio(is_head)',function(data){
+      console.log(data);
+      var value=data.value;
+      if(value>0){
+        $('#stockid').show();
+      } else{
+        $('#stockid').hide();
+      }
+    })
+
+    upload.render({
+      elem: '#uploadimg'
+      ,url: '/admin/common/upload?type=goods' //此处配置你自己的上传接口即可
+      ,accept: 'file' //普通文件
+      ,exts: 'png|jpg|jpeg|bng'
+      ,done: function(res){
+        layer.msg('上传成功');
+        console.log(res);
+        $('#uploadinfo').attr('src',res.data.src).show();
+        $('#uploadinfos').show();
+        $('#goodsimg').val(res.data.src);
+      }
+    });
+    
+    var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+        parent.pricetable=table;
+      //数据表格实例化			
+      var tbWidth = $("#tableRes").width();
+      var layTableId = "layTable";
+      var tableIns = table.render({
+        elem: '#dataTable',
+        id: layTableId,
+        data: viewObj.tbData,
+        width: tbWidth,
+        page: false,
+        loading: true,
+        even: false, //不开启隔行背景
+        cols: [[
+          {title: '序号', type: 'numbers',width:50},
+          {field: 'name', title: '规格名称', edit: 'text',width:150},
+                  {field: 'unit', title: '成本价', edit: 'number',width:80},
+                  {field: 'from', title: '原价', edit: 'number',width:80},
+                  {volist name="group" id="vo"}
+                  {field: 'price{$vo.gid}', title: '{$vo.name}售价', edit: 'number',width:120},
+                  {/volist}
+          {field: 'tempId', title: '操作',width:90, templet: function(d){
+            return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>删除</a>';
+          }}
+        ]],
+        done: function(res, curr, count){
+          viewObj.tbData = res.data;
+        }
+		});
+		
+		//定义事件集合
+		active = {
+			addRow: function(){	//添加一行
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				var newRow = {tempId: new Date().valueOf(), type: null, name: '', state: 0};
+				oldData.push(newRow);
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			updateRow: function(obj){
+				var oldData = table.cache[layTableId];
+				console.log(oldData);
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+					if(row.tempId == obj.tempId){
+						$.extend(oldData[i], obj);
+						return;
+					}
+				}
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			removeEmptyTableCache: function(){
+				var oldData = table.cache[layTableId];		
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+					if(!row || !row.tempId){
+						oldData.splice(i, 1);    //删除一项
+					}
+					continue;
+				}
+				tableIns.reload({
+					data : oldData
+				});
+			},
+			save: function(){
+				var oldData = table.cache[layTableId];	
+				console.log(oldData);	
+				for(var i=0, row; i < oldData.length; i++){
+					row = oldData[i];
+          console.log(row);
+          if(row.name==""){
+              layer.msg("规格名称不能为空");
+              return false;
+          }
+          if(row.unit!="" && (!isNumber(row.unit))){
+              layer.msg(row.name+"成本价不能为空");
+              return false;
+          }
+          {volist name="group" id="vo"}
+          if(row.price{$vo.gid}==undefined||row.price{$vo.gid}==""||(!isNumber(row.price{$vo.gid}))){
+              layer.msg(row.name+"{$vo.name}售价不能为空");
+              return false;
+          }
+          {/volist}
+        }
+        if(table.cache[layTableId].length<1){
+            layer.msg("价格数据不能为空");
+            return false;
+        }
+        parent.pricedata=table.cache[layTableId];
+        // layer.msg("保存成功");
+        return true;
+          // document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId], null, 2);	//使用JSON.stringify() 格式化输出JSON字符串		
+        }
+      }
+      parent.activeInfo=active;
+		
+		//激活事件
+		var activeByType = function (type, arg) {
+			if(arguments.length === 2){					
+				active[type] ? active[type].call(this, arg) : '';
+			}else{
+				active[type] ? active[type].call(this) : '';
+			}
+		}
+		
+		//注册按钮事件
+		$('.layui-btn[data-type]').on('click', function () {
+			var type = $(this).data('type');
+			activeByType(type);
+		});
+		
+		//监听select下拉选中事件
+		form.on('select(type)', function(data){
+			var elem = data.elem; //得到select原始DOM对象
+			$(elem).prev("a[lay-event='type']").trigger("click");
+		});
+		
+		 //监听工具条
+		table.on('tool(dataTable)', function (obj) {
+			var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
+			console.log(data);
+			switch(event){
+				case "type":
+					//console.log(data);
+					var select = tr.find("select[name='type']");
+					if(select){						
+						var selectedVal = select.val();
+						if(!selectedVal){
+							layer.tips("请选择一个分类", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
+						}
+						console.log(selectedVal);
+						$.extend(obj.data, {'type': selectedVal});
+						activeByType('updateRow', obj.data);	//更新行记录对象
+					}
+					break;
+				case "state":
+					var stateVal = tr.find("input[name='state']").prop('checked') ? 1 : 0;
+					$.extend(obj.data, {'state': stateVal})	
+					activeByType('updateRow', obj.data);	//更新行记录对象
+					break;						
+				case "del":
+					layer.confirm('确定删除？', function(index){
+					  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+					  layer.close(index);
+					  activeByType('removeEmptyTableCache');
+					});
+					break;						
+			}
+		});
+  })
+</script>
+{/block}

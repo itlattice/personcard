@@ -1,0 +1,21 @@
+{
+    "name": "iboxs/payment",
+    "description": "支付宝/微信支付/QQ钱包集成包",
+    "type": "1",
+    "license": "MIT",
+    "version": "1.2.0",
+    "authors": [
+        {
+            "name": "zqu",
+            "email": "zqu1016@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "iboxs\\payment\\": "src/"
+        }
+    }
+}

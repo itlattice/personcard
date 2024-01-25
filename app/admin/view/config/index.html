@@ -1,0 +1,335 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    .layui-form-item {
+        width: 40%;
+    }
+</style>
+{/block}
+{block name='body'}
+<div class="x-nav">
+    <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+            <cite>导航元素</cite></a>
+    </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+        onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">网站设置</li>
+                <li>购买设置</li>
+                <li>邮件设置</li>
+                <li>弹窗设置</li>
+                <li>QQ互联</li>
+                <li>公告设置</li>
+                <li>站长设置</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="webConfig[title]" value="{$webConfig.title}" autocomplete="off"
+                                placeholder="请输入网站标题" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站Slogan</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="webConfig[slogan]" value="{$webConfig.slogan}" autocomplete="off"
+                                placeholder="请输入网站Slogan" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站关键词</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="webConfig[keyword]" value="{$webConfig.keyword}" autocomplete="off"
+                                placeholder="请输入网站关键词" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Description</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="webConfig[desc]" value="{$webConfig.desc}" autocomplete="off"
+                                placeholder="请输入Description" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站备案号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="webConfig[beian]" value="{$webConfig.beian}" autocomplete="off"
+                                placeholder="请输入网站备案号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">网站Logo</label>
+                        <div class="layui-input-block" style="display: flex;">
+                            <input type="text" name="webConfig[logo]" id="weblogoinput" readonly value="{$webConfig.logo}" autocomplete="off" class="layui-input">
+                            <button class="layui-btn" id="uploadlogo">上传</button>
+                        </div> 
+                        <div class="layui-input-block" id="weblogodiv">
+                            <img src="{$webConfig.logo}" id="weblogo" style="height: 5rem;">
+                        </div> 
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">游客购买</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="webOn[youke]" value="1" title="开启" {if
+                                condition='$webOn.youke eq 1' }checked="" {/if}> <input type="radio" name="webOn[youke]"
+                                value="0" title="关闭" {if condition='$webOn.youke eq 0' }checked="" {/if}> </div> </div>
+                                <div class="layui-form-item">
+                            <label class="layui-form-label">用户注册</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="webOn[reg]" value="1" title="开启" {if
+                                    condition='$webOn.reg eq 1' }checked="" {/if}> <input type="radio" name="webOn[reg]"
+                                    value="0" title="关闭" {if condition='$webOn.reg eq 0' }checked="" {/if}> </div>
+                                    </div> <div class="layui-form-item">
+                                <label class="layui-form-label">用户登录</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="webOn[user]" value="1" title="开启" {if
+                                        condition='$webOn.user eq 1' }checked="" {/if}> <input type="radio"
+                                        name="webOn[user]" value="0" title="关闭" {if condition='$webOn.user eq 0'
+                                        }checked="" {/if}> </div> </div> <div class="layui-form-item">
+                                    <label class="layui-form-label">团队名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="webConfig[company]" value="{$webConfig.company}"
+                                            autocomplete="off" placeholder="请输入团队名称(底部显示)" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">统计代码</label>
+                                    <div class="layui-input-block">
+                                        <textarea class="layui-textarea" value="{$webConfig.static}"
+                                            name="webConfig[static]"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">支付名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="order[name]" value="{$order.name}" autocomplete="off"
+                                            placeholder="请输入支付名称" class="layui-input">
+                                        <tip>留空默认为商品名称</tip>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">下单账号</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="order[usr]" value="1" title="开启" {if condition='$order.usr eq 1' }checked="" {/if}>
+                                        <input type="radio" name="order[usr]" value="0" title="关闭" {if condition='$order.usr eq 0'}checked="" {/if}> 
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">查单密码</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="order[pwd]" value="1" title="开启" {if condition='$order.pwd eq 1' }checked="" {/if}>
+                                        <input type="radio" name="order[pwd]" value="0" title="关闭" {if condition='$order.pwd eq 0' }checked="" {/if}> 
+                                    </div> 
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">下单账号提示</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="order[usrtip]" autocomplete="off"
+                                            value="{$order.usrtip}" placeholder="请输入下单账号提示" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">查单密码提示</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="order[pwdtip]" autocomplete="off"
+                                            value="{$order.pwdtip}" placeholder="请输入查单密码提示" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">短信发货</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="order[sms]" value="1" title="开启(暂不支持)" disabled="">
+                                        <input type="radio" name="order[sms]" value="0" title="关闭" checked="">
+                                        <br/>
+                                        <tip>*因接口繁多，目前暂无具体接入计划，若有需要可联系客服私人定制</tip>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">邮件发货</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="order[email]" value="1" title="开启" {if condition='$order.email eq 1' }checked="" {/if}>
+                                        <input type="radio" name="order[email]" value="0" title="关闭" {if condition='$order.email eq 0' }checked="" {/if}> 
+                                    </div> 
+                                </div>
+                                </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">SMTP服务器</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="smtp" name="email[smtp]" value="{$email.smtp}"
+                                                    autocomplete="off" placeholder="请输入SMTP服务器" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">SMTP密码</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="smtppwd" name="email[pwd]" value="{$email.pwd}"
+                                                    autocomplete="off" placeholder="请输入SMTP密码" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">发件人名称</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="smtpusr" name="email[name]" value="{$email.name}"
+                                                    autocomplete="off" placeholder="请输入发件人名称" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">发件人邮箱</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="smtpemail" name="email[email]" value="{$email.email}"
+                                                    autocomplete="off" placeholder="请输入发件人邮箱" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">测试邮件</label>
+                                            <div class="layui-input-block" style="display: flex;">
+                                                <input type="text" id="smtpsend"  placeholder="请输入测试邮件的收件箱" autocomplete="off" class="layui-input">
+                                                <button class="layui-btn" id="sendtestemail">发送</button>
+                                            </div> 
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">站长接收新订单邮件通知</label>
+                                            <div class="layui-input-block">
+                                                <input type="radio" name="email[admin]" value="1" title="开启" {if condition='$email.admin eq 1' }checked="" {/if}>
+                                                <input type="radio" name="email[admin]" value="0" title="关闭" {if condition='$email.admin eq 0' }checked="" {/if}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">向用户发送订单信息邮件</label> 
+                                            <div class="layui-input-block">
+                                                <input type="radio" name="email[order]" value="1" title="开启" {if condition='$email.order eq 1' }checked="" {/if}>
+                                                <input type="radio" name="email[order]" value="0" title="关闭" {if condition='$email.order eq 0' }checked="" {/if}>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">订单邮件主题</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="orderemailsubject" value="{$orderemailsubject}"
+                                                    autocomplete="off" placeholder="请输入订单邮件主题" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item" style="height: 70%;width: 70%;">
+                                            <label class="layui-form-label">订单邮件模板</label>
+                                            <div class="layui-input-block">
+                                                <textarea id="orderemail"
+                                                    name="orderemail">{$orderemail}</textarea>
+                                                <tip>*可用变量【订单号：{order}】、【卡密：{card}】、【发货时间：{goodstime}】、【网站名称：{sitename}】</tip>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-form-item" style="height: 70%;width: 70%;">
+                                            <label class="layui-form-label">首页弹窗内容</label>
+                                            <div class="layui-input-block">
+                                                <textarea id="indexwindows"
+                                                    name="indexwindows">{$indexwindows}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item" style="height: 70%;width: 70%;">
+                                            <label class="layui-form-label">商品页弹窗内容</label>
+                                            <div class="layui-input-block">
+                                                <textarea id="goodswindows"
+                                                    name="goodswindows">{$goodswindows}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="layui-tab-item">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">QQ登录</label> 
+                                            <div class="layui-input-block">
+                                                <input type="radio" name="qqlogin[on]" value="1" title="开启" checked="">
+                                                <input type="radio" name="qqlogin[on]" value="0" title="关闭">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">ClienID</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="qqlogin[clientid]" value=""
+                                                    autocomplete="off" placeholder="请输入QQ互联的ClienID" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">Secret</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="qqlogin[secret]" value="{$email.email}"
+                                                    autocomplete="off" placeholder="请输入QQ互联的secret" class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-form-item" style="height: 70%;width: 70%;">
+                                            <label class="layui-form-label">首页公告内容</label>
+                                            <div class="layui-input-block">
+                                                <textarea id="notice" name="notice">{$notice}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">站长邮箱</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="admin[email]"
+                                                    value="{$admin.email}" autocomplete="off"
+                                                    placeholder="请输入站长邮箱" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">站长QQ</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="admin[qq]" value="{$admin.qq}"
+                                                    autocomplete="off" placeholder="请输入站长QQ"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">客服电话</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="admin[tel]" value="{$admin.tel}"
+                                                    autocomplete="off" placeholder="请输入客服电话"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" lay-submit="" lay-filter="config" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-radius" style="margin-left: 16.5%;">确定提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__STATIC__/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="__ASSETS__/page/admin/config/index.js"></script>
+{/block}

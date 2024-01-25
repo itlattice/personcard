@@ -1,0 +1,97 @@
+<html><head>
+    <title>收银台 - {$webConfig.title}</title>
+
+    <link href="__ASSETS__/payment/css/basic.css" rel="stylesheet" type="text/css">
+    <link href="__ASSETS__/payment/css/wxpay.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__ASSETS__/js/jquery.min.js"></script>
+    <script src="__ASSETS__/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="__ASSETS__/page/helper.js"></script>
+    <script type="text/javascript" src="__STATIC__/admin/lib/layui/layui.js"></script>
+    {if condition="$order.pay_type eq 1"}
+    <style type="text/css">
+    li{list-style:none;}
+    *{margin:0;padding:0;}
+        .qr_info .box div{
+            width:670px;height:420px;text-align:left;
+            zoom:1;display:inline-block;  *display:inline;
+            background: url(__ASSETS__/images/qrpay_wechat.png) no-repeat;
+        }
+    </style>
+    {else /}
+    <style type="text/css">
+    li{list-style:none;}
+    *{margin:0;padding:0;}
+        .qr_info .box div{
+            width:670px;height:420px;text-align:left;
+            zoom:1;display:inline-block;  *display:inline;
+            background: url(__ASSETS__/images/qrpay_alipay.png) no-repeat;
+        }
+    </style>
+    {/if}
+    <body>
+        <input type="hidden" id="token" value="{:token()}">
+        <div class="toast_div" style="margin-top: 20px;text-align: center;margin:0 auto"></div>
+        <div class="qr_top">
+            <li><strong><a target="_blank">格子吧收银台</a></strong><font color="#999999"><span id="time_tisp">（请在<span id="time">500</span>秒完成支付，否则将导致订单失效，需返回重新提交）</span></font></li>
+            <li style="float:right;text-align:right;width:32%;padding:0 20px 0 0;">支付订单：{$order.order_num}&nbsp;&nbsp;&nbsp;&nbsp;支付金额：<b>{$order.info_price}</b> 元</li>
+        </div>
+        <div class="qr_info">
+            <div class="box">
+                <div>
+                    <cite>
+                        <div id="qrcode" style="width:300px; height:300px; margin-top:0px;"></div>
+                    </cite>
+                </div>
+                        </div>
+        </div>
+        <div class="qr_s">
+        <div>
+    <script>
+        var maxTime={$time};
+        $('#time').html(maxTime);
+        setInterval(function(){
+            maxTime--;
+            $('#time').html(maxTime);
+            if(maxTime<=0){
+                location.href="/"
+            }
+        },1000);
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width : 300,
+            height : 300
+        });
+
+        function makeCode () {		
+            var elText ="{$code}";
+            qrcode.makeCode(elText);
+        }
+        makeCode();
+
+        //每5秒执行一次myFunction()方法
+        window.setInterval(myFunction, 1000 * 3);
+        var i = 1;
+    
+        function myFunction() {
+            var token=$('#token').val();
+            $.ajax({
+                url: "/paystauts",
+                data: {
+                    order:"{$order.order_num}",
+                    token:token
+                },
+                type: "POST",
+                dataType: "json",
+                success: function(data) {
+                    if(data.code==1){
+                        layer.msg("支付成功，即将跳转");
+                        setTimeout("location.href='/payreturn/{$key}?out_trade_no={$order.order_num}'",2000);
+                    }
+                }
+            });
+        }
+    </script>
+    
+    </div>
+</div>
+</body>
+</html>

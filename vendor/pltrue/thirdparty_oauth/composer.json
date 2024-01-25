@@ -1,0 +1,26 @@
+{
+    "name": "pl1998/thirdparty_oauth",
+    "description": "这是一个第三方授权登录扩展包。目前支持GITHUB、GITEE、谷歌、微博、微信、QQ等授权登录",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "pl1998",
+            "email": "pltruenine@163.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pl1998\\ThirdpartyOauth\\": "./src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pl1998\\ThirdpartyOauth\\ServiceProvider"
+            ]
+        }
+    }
+}

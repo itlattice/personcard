@@ -1,0 +1,76 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    .layui-form-item {
+        width: 70%;
+    }
+    .footer{
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>易支付(彩虹易支付，易支付跑路概率较高，请谨慎使用)</legend>
+  </fieldset>
+  <form class="layui-form" action="" lay-filter="formTest">
+    <div class="layui-form-item">
+        <label class="layui-form-label">商户ID</label>
+        <div class="layui-input-block">
+          <input type="text" name="merid" lay-verify="required" value="{$epay.config.merid}" placeholder="请输入商户ID" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">商户Key</label>
+        <div class="layui-input-block">
+          <input type="text" name="key" lay-verify="required" value="{$epay.config.key}" placeholder="请输入商户Key" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付宝支付</label>
+        <div class="layui-input-block">
+            <input type="radio" name="alipay" value="1" title="开启" {if condition='$epay.alipay eq 1'}checked=''{/if}>
+            <input type="radio" name="alipay" value="0" title="关闭" {if condition='$epay.alipay eq 0'}checked=''{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信支付</label>
+        <div class="layui-input-block">
+            <input type="radio" name="wechat" value="1" title="开启" {if condition='$epay.wechat eq 1'}checked=''{/if}>
+            <input type="radio" name="wechat" value="0" title="关闭" {if condition='$epay.wechat eq 0'}checked=''{/if}>
+        </div> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">同步跳转地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="merchantid" lay-verify="required" readonly value="{$url}/payreturn/epay" autocomplete="off" class="layui-input">
+        </div> 
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">异步通知接口</label>
+        <div class="layui-input-block">
+            <input type="text" name="merchantid" lay-verify="required" readonly value="{$url}/paynotice/epay" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <tip>*若有需要，可将上面的同步跳转地址及异步通知接口配置到码支付的管理中心里面。</tip>
+  </form>
+{/block}
+{block name='script'}
+<script>
+    var form=[];
+    layui.use(['laydate', 'form'], function () {
+        form=layui.form;
+        form.render();
+    })
+</script>
+{/block}

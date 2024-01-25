@@ -1,0 +1,44 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+</style>
+{/block}
+{block name='body'}
+<div class="layui-fluid">
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">旧密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldpwd" value="" autocomplete="off"
+                    placeholder="请输入旧密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="pwd" value="" autocomplete="off"
+                    placeholder="请输入新密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">再输一次</label>
+            <div class="layui-input-block">
+                <input type="password" name="again" value="" autocomplete="off"
+                    placeholder="再输一次新密码" class="layui-input">
+            </div>
+        </div>
+        <button type="button" lay-submit="" lay-filter="config" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-radius" style="margin-left: 40%;">确定提交</button>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/info/updatepwd.js"></script>
+{/block}

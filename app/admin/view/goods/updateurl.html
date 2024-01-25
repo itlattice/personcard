@@ -1,0 +1,67 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+  body {
+    background-color: #fff;
+  }
+
+  .layui-form-item {
+    width: 70%;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  .icon{
+    width: 3rem;
+    height: 3rem;
+  }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>商品加卡[{$name}]</legend>
+</fieldset>
+<div class="layui-form" action="" lay-filter="formTest">
+    <input type="hidden" name="gid" value="{$_GET['id']??0}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品规格</label>
+        <div class="layui-input-block">
+            <select lay-filter="specs" name="specs">
+                {volist id="vo" name="specs"}
+                <option value="{$vo.gsid}">{$vo.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发货内容</label>
+        <div class="layui-input-block" style="width: 100%;">
+            <textarea class="layui-textarea" rows="10" maxlength="500" name="url">{$url}</textarea>
+            <tip>*所有人收到的都是这条信息，请注意，链接类商品单次最高购买量为1，不允许加购。</tip>
+        </div>
+    </div>
+</div>
+
+{/block}
+{block name='script'}
+<script>
+  var forma = [];
+  layui.use(['laydate', 'form','upload'], function () {
+    forma = layui.form;
+    upload=layui.upload;
+    forma.render();
+  })
+
+  var reloads=function(){
+      location.reload();
+  }
+</script>
+{/block}

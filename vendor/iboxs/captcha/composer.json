@@ -1,0 +1,22 @@
+{
+    "name": "iboxs/captcha",
+    "description": "captcha package for iboxsframe5",
+    "authors": [
+        {
+            "name": "yunwuxin",
+            "email": "448901948@qq.com"
+        }
+    ],
+    "license": "Apache-2.0",
+    "require": {
+    	"iboxs/framework": "5.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "iboxs\\captcha\\": "src/"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    }
+}

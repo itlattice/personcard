@@ -1,0 +1,37 @@
+    <script src="__ASSETS__/js/common.js"></script><div class="container">
+    <div class="logo">
+        <a href="__STATIC__/admin/index.html">格子吧发卡系统后台</a></div>
+    <div class="left_open">
+        <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+    </div>
+    <ul class="layui-nav left fast-add" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;">快捷操作</a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a onclick="xadmin.open('待发货订单','/admin/order/sail','','',true)">
+                        <i class="iconfont">&#xe6a2;</i>待发货订单
+                    </a>
+                </dd>
+            </dl>
+        </li>
+    </ul>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item to-index">
+            <a href="https://gz8.co/carddoc" target="_blank">使用教程</a>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="javascript:void(0);" onclick="clearCache()" id="clearCache">清除缓存</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">{$adminInfo.username}</a>
+            <dl class="layui-nav-child">
+                <dd><a onclick="updatePwd()">修改密码</a></dd>
+                <dd><a href="/admin/info/loginout">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item to-index">
+            <a href="/" target="_blank">网站首页</a>
+        </li>
+    </ul>
+</div>

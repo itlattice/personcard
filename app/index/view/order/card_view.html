@@ -1,0 +1,63 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">-->
+    <title>订单详情 - {$webConfig.title} - {$webConfig.slogan}</title>
+    <link rel="stylesheet" type="text/css" href="__ASSETS__/css/layui.css?v=1.2.0" />
+    <link rel="stylesheet" href="__ASSETS__/css/main.css?v=1.2.0">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <style>
+        .header .header-box .query a {
+            max-width: 45%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="" class="layui-layer-content">
+        <table class="table table-condensed table-hover layui-table" id="orderItem">
+            <tbody>
+                <tr>
+                    <td colspan="6" style="text-align:center" class="orderTitle"><b>订单基本信息</b></td>
+                </tr>
+
+                <tr>
+                    <td class="info orderTitle">订单编号</td>
+                    <td colspan="5" class="orderContent">{$info.order_num}</td>
+                </tr>
+
+                <tr>
+                    <td class="info orderTitle">商品名称</td>
+                    <td colspan="5" class="orderContent"><a target="_blank" href="/goods/{$info.goods_id}.html">{$info.goods.name??'商品失效'}</a></td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle">订单金额</td>
+                    <td colspan="5" class="orderContent">￥{$info.info_price}元</td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle">购买时间</td>
+                    <td colspan="5">{$info.add_time}</td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle">订单状态</td>
+                    <td colspan="5" class="orderContent">
+                        <span class="layui-badge layui-bg-{$info.statecolor}">{$info.statetxt}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle" colspan="6">卡密</td>
+                </tr>
+                {volist name="$info.card" id="vo"}
+                <tr>
+                    <td class="info orderTitle" colspan="6">
+                        <input type="text" class="layui-input" style="text-align: center;" readonly value="{$vo}" />
+                    </td>
+                </tr>
+                {/volist}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

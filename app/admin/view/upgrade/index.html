@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">-->
+    <title>订单详情 - {$webConfig.title} - {$webConfig.slogan}</title>
+    <link rel="stylesheet" type="text/css" href="__ASSETS__/css/layui.css?v=1.2.0" />
+    <link rel="stylesheet" href="__ASSETS__/css/main.css?v=1.2.0">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <style>
+        .header .header-box .query a {
+            max-width: 45%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="" class="layui-layer-content">
+        <table class="table table-condensed table-hover layui-table" id="orderItem">
+            <tbody>
+                <tr>
+                    <td colspan="6" style="text-align:center" class="orderTitle"><b>更新信息</b></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><span style="color:red;font-weight: bold;">更新期间请不要关闭，以免系统异常,若发生异常，请至官网下载最新版覆盖或提交工单申请技术支持</span></td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle">当前版本</td>
+                    <td colspan="5" class="orderContent">{$ver}</td>
+                </tr>
+
+                <tr>
+                    <td class="info orderTitle">最新版本</td>
+                    <td colspan="5" class="orderContent">{$newver}</td>
+                </tr>
+                <tr>
+                    <td class="info orderTitle">更新进度</td>
+                    <td colspan="5" class="orderContent">当前剩余<span id="newverid">0</span>版，共{$num}个</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="__ASSETS__/js/jquery.min.js"></script>
+<script src="__ASSETS__/js/common.js"></script>
+<script src="__STATIC__/admin/lib/layui/layui.js" charset="utf-8"></script>
+<script src="__ASSETS__/page/admin/upgrade/index.js"></script>
+</html>

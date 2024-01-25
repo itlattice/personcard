@@ -1,0 +1,193 @@
+{extend name='base' /}
+{block name='title'}
+<title>首页</title>
+{/block}
+{block name="meta"}
+<style>
+    .noticelist{
+        border-color: #fff !important;
+    }
+</style>
+{/block}
+{block name='body'}
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-body ">
+                <blockquote class="layui-elem-quote">有新版本：
+                    <span class="x-red">V2.0.0</span>！[<a href="javascript:void(0);" onclick="upgrade()">立即更新</a>]
+                </blockquote>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-body ">
+                <blockquote class="layui-elem-quote">欢迎管理员：
+                    <span class="x-red">{$userinfo.username}</span>！当前时间:<?php echo date('Y-m-d H:i'); ?>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">数据统计</div>
+            <div class="layui-card-body ">
+                <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>商品数</h3>
+                            <p>
+                                <cite>{$goods}</cite></p>
+                        </a>
+                    </li>
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>会员数</h3>
+                            <p><cite>{$user}</cite></p>
+                        </a>
+                    </li>
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>订单数</h3>
+                            <p>
+                                <cite>{$order}</cite></p>
+                        </a>
+                    </li>
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>已收款金额</h3>
+                            <p>
+                                <cite>{$amount}</cite></p>
+                        </a>
+                    </li>
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>客单价</h3>
+                            <p>
+                                <cite>{$useramount}</cite></p>
+                        </a>
+                    </li>
+                    <li class="layui-col-md2 layui-col-xs6">
+                        <a class="x-admin-backlog-body">
+                            <h3>今日订单数</h3>
+                            <p>
+                                <cite>{$todayOrder}</cite></p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-card-header">系统信息</div>
+            <div class="layui-card-body ">
+                <table class="layui-table">
+                    <tbody>
+                      
+                        <tr>
+                            <th>服务器地址</th>
+                            <td><?php echo request()->domain(); ?></td>
+                        </tr>
+                        <tr>
+                            <th>操作系统</th>
+                            <td><?PHP echo PHP_OS; ?></td>
+                        </tr>
+                        <tr>
+                            <th>运行环境</th>
+                            <td><?PHP echo $_SERVER ['SERVER_SOFTWARE']??'获取失败'; ?></td>
+                        </tr>
+                        <tr>
+                            <th>PHP版本</th>
+                            <td><?PHP echo PHP_VERSION; ?></td>
+                        </tr>
+                        <tr>
+                            <th>上传附件限制</th>
+                            <td><?PHP
+                                echo get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许上传附件";
+                                ?></td>
+                        </tr>
+                        <tr>
+                            <th>执行时间限制</th>
+                            <td><?PHP echo get_cfg_var("max_execution_time")."秒 "; ?><s></s></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            <div class="layui-card-header">开发团队</div>
+            <div class="layui-card-body ">
+                <table class="layui-table">
+                    <tbody>
+                        <tr>
+                            <th>版权所有</th>
+                            <td>格子吧工作室[官网：<a href="https://www.itgz8.com" target="_blank">https://www.itgz8.com</a>]</td>
+                        </tr>
+                        <tr>
+                            <th>软件开发</th>
+                            <td>IT格子(320587491@qq.com/notice@itgz8.com)</td>
+                        </tr>
+                        <tr>
+                            <th>UI设计</th>
+                            <td>嘉昱工作室(tqys2016@126.com)</td>
+                        </tr>
+                        <tr>
+                            <th>软件发行</th>
+                            <td>格子吧软件工作室</td>
+                        </tr>
+                        <tr>
+                            <th>授权管理</th>
+                            <td>格子吧授权系统[<a href="https://auth.itgz8.com" target="_blank">https://auth.itgz8.com</a>]<br/>格子吧应用中心[<a href="https://app.itgz8.com" target="_blank">https://app.itgz8.com</a>]</td>
+                        </tr>
+                        <tr>
+                            <th>友情链接</th>
+                            <td>暂无，申请请联系[QQ:320587491]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-card">
+            <div class="layui-card-header">系统公告</div>
+            <div class="layui-card-body ">
+                <table class="layui-table">
+                    <tbody>
+                        <tr>
+                            <td class="noticelist" onclick="" style="cursor:pointer;">55555</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style id="welcome_style"></style>
+    <div class="layui-col-md12">
+        <blockquote class="layui-elem-quote layui-quote-nm">Powered by @格子吧工作室（2015-<?php echo date('Y'); ?>）
+        </blockquote>
+    </div>
+  </div>
+</div>
+{/block}
+{block name='script'}
+<script>
+function openNotice(id,title){
+  layer.open({
+    type:2,
+    maxmin:false,
+    content:'https://app.itgz8.com/notice/'+id+'.html',
+    area:['800px','500px'],
+    title:title
+  })
+}
+</script>
+{/block}

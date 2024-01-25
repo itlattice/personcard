@@ -1,0 +1,70 @@
+{extend name='base' /}
+{block name='title'}
+<title>系统配置</title>
+{/block}
+{block name="meta"}
+<style>
+    body {
+        background-color: #fff;
+    }
+
+    .layui-form-item {
+        width: 70%;
+    }
+    .footer{
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+</style>
+{/block}
+{block name='body'}
+<input type="hidden" id="token" name="token" value="{:token()}">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>支付宝(官方通道)</legend>
+  </fieldset>
+  <form class="layui-form" action="" lay-filter="formTest">
+    <div class="layui-form-item">
+      <label class="layui-form-label">APPID</label>
+      <div class="layui-input-block">
+        <input type="text" name="appid" lay-verify="required" value="{$alipaycode.config.appid}" lay-reqtext="APPID是必填项，岂能为空？" placeholder="请输入APPID" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">支付宝公钥</label>
+      <div class="layui-input-block">
+          <textarea class="layui-textarea" name="pubkey" placeholder="请输入支付宝公钥（不是应用公钥，本数据出错会造成无法发起支付）" lay-verify="required">{$alipaycode.config.pubkey}</textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">应用私钥</label>
+      <div class="layui-input-block">
+        <textarea class="layui-textarea" name="private" placeholder="请输入应用私钥（不是支付宝私钥或rsakey信息，本数据出错可以发起支付，但会回调失败）" lay-verify="required">{$alipaycode.config.private}</textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电脑网页</label>
+        <div class="layui-input-block">
+            <input type="radio" name="pc" value="1" title="开启" {if condition='$alipaycode.pc eq 1'}checked=''{/if}>
+            <input type="radio" name="pc" value="0" title="关闭" {if condition='$alipaycode.pc eq 0'}checked=''{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机网页</label>
+        <div class="layui-input-block">
+            <input type="radio" name="wap" value="1" title="开启" {if condition='$alipaycode.wap eq 1'}checked=''{/if}>
+            <input type="radio" name="wap" value="0" title="关闭" {if condition='$alipaycode.wap eq 0'}checked=''{/if}>
+        </div> 
+    </div>
+    <p style="padding-left: 2rem;">请注意：这里的公钥私钥并不是一对，而是两对中各取一个，应用私钥和应用公钥是使用OpenSSL工具（也可以<br/>用支付宝开发者工具）生成的一对rsa秘钥（记得选择非Java模式），应用公钥是配置进支付宝的，应用私钥是配<br/>置在这里的，支付宝公钥由支付宝提供可在支付宝应用设置内查看。已购买协助部署的可直接联系客服协助配置。</p>
+  </form>
+{/block}
+{block name='script'}
+<script>
+    var form=[];
+    layui.use(['laydate', 'form'], function () {
+        form=layui.form;
+        form.render();
+    })
+</script>
+{/block}

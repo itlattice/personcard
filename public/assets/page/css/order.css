@@ -1,0 +1,62 @@
+.layui-card .layui-card-header span {
+    margin-left: 20px;
+}
+
+.order-no span {
+    width: 70px;
+    text-align: left;
+    display: inline-block;
+}
+
+.goods-name {
+    display: flex;
+}
+
+.goods-name span {
+    width: 70px;
+    flex-shrink: 0;
+    text-align: left;
+    display: inline-block;
+}
+
+.goods-price span {
+    width: 70px;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.sh-btn {
+    background: #5fb878;
+}
+
+.del-btn {
+    background: #ff5722;
+}
+
+.layui-card {
+    box-shadow: unset;
+    margin-bottom: 0;
+}
+
+.loading {
+    text-align: center;
+    margin-top: 20px;
+    padding: 5px 0;
+    cursor: pointer;
+    color: #737373;
+}
+
+.qfk-btn {
+    background: #01b5c5;
+}
+
+.goods-btn {
+    background: #01b5c5;
+}
+
+.goods-price {
+    width: unset;
+    display: flex;
+    justify-content: unset;
+}

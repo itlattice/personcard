@@ -1,0 +1,125 @@
+{extend name="base" /}
+{block name="title"}
+<title>{$webConfig.title} - {$webConfig.slogan}</title>
+<meta name="Keywords" content="{$webConfig.keyword}">
+<meta name="Description" content="{$webConfig.desc}">
+<style>
+    .header .header-box .query a {
+        max-width: 45%;
+    }
+</style>
+<link rel="stylesheet" href="__ASSETS__/page/css/goods.css">
+{/block}
+{block name='body'}
+<div id="content">
+    <div class="main">
+        <div class="layui-row">
+            <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+                <div class="main-box">
+                    <div class="pay-title">
+                        <svg style="margin-bottom: -6px;" t="1603120404646" class="icon" viewBox="0 0 1024 1024"
+                            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1611" width="27" height="27">
+                            <path d="M320.512 428.032h382.976v61.44H320.512zM320.512 616.448h320.512v61.44H320.512z"
+                                fill="#00EAFF" p-id="1612" data-spm-anchor-id="a313x.7781069.0.i3" class="selected">
+                            </path>
+                            <path
+                                d="M802.816 937.984H221.184l-40.96-40.96V126.976l40.96-40.96h346.112l26.624 10.24 137.216 117.76 98.304 79.872 15.36 31.744v571.392l-41.984 40.96z m-540.672-81.92h500.736V345.088L677.888 276.48 550.912 167.936H262.144v688.128z"
+                                fill="#3C8CE7" p-id="1613" data-spm-anchor-id="a313x.7781069.0.i0" class=""></path>
+                        </svg>
+                        确认订单
+                    </div>
+
+                    <div class="layui-card-body">
+                        <table class="layui-table" lay-skin="nob">
+                            <colgroup>
+                                <col width="50%">
+                                <col width="50%">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: right">商品名称：</td>
+                                    <td>
+                                        <span class="small-tips tips-green noML">{$info.goods.name}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right">商品规格：</td>
+                                    <td>
+                                        <span class="small-tips tips-green noML">
+                                            {$info.specs.name} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right">商品单价：</td>
+                                    <td>
+                                        <span class="small-tips tips-green noML">
+                                            ￥{$info.sale_price} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right">购买数量：</td>
+                                    <td><span class="small-tips tips-green noML">x {$info.num}</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right">订单金额：</td>
+                                    <td>
+                                        <span class="small-tips tips-green noML">￥{$info.price}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right">实际支付金额：</td>
+                                    <td>
+                                        <span class="small-tips tips-green noML">￥{$info.info_price}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="text-align: center; color: #666; padding: 10px 0;">------------
+                            &nbsp;请选择支付方式&nbsp; ------------</p>
+
+
+                        <div style="margin: 0 auto; text-align: center; ">
+                            {if condition="$payAccount.alipay neq false"}
+                            <div class="pay-type pay-select" data-type="alipay" data-id="{$payAccount.alipay}-alipay" data-name="支付宝支付"></div>
+                            {/if}
+                            {if condition="$payAccount.wechat neq false"}
+                            <div class="pay-type {if condition='$payAccount.alipay eq false'}pay-select{/if}" data-type="wechat" data-id="{$payAccount.wechat}-wechat" data-name="微信支付"></div>
+                            {/if}
+                            <!-- <div class="pay-type " data-type="qqpay" data-id="qqpay" data-name="QQ支付"></div> -->
+                        </div>
+
+                        <div style="margin: 0 auto; text-align: center; ">
+                            </div>
+                            {if condition="$payAccount.alipay eq false && $payAccount.wechat eq false"}
+                            <p style="text-align: center; color: #666; padding-top: 10px;">暂未提供任何支付方式</p>
+                            {/if}
+
+                            <p class="btn" style="text-align: center; margin: 40px;">
+                                <a href="javascript:;" class="pay-btn">立即支付</a>
+                            </p>
+
+                    </div>
+                    <form class="layui-form layui-form-pane hide" action="/order/pay" method="post">
+                        <input name="pay_type" value="{$paytype}" type="hidden" />
+                        <input type="hidden" name="ordernum" value="{$info.order_num}">
+                        <input type="submit" value="提交" id="buy-btn">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    window.onload = function () {
+        $('.pay-btn').click(function () {
+            $('#buy-btn').click();
+        })
+    }
+</script>
+</div>
+{/block}
+{block name='script'}
+<script>
+    
+</script>
+{/block}

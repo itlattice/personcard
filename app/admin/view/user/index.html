@@ -1,0 +1,68 @@
+{extend name='base' /}
+{block name='title'}
+<title>支付设置</title>
+{/block}
+{block name="meta"}
+<style>
+  th {
+    text-align: center !important;
+  }
+</style>
+{/block}
+{block name='body'}
+<div class="x-nav">
+  <span class="layui-breadcrumb">
+    <a>首页</a>
+    <a>会员设置</a>
+    <a><cite>会员列表</cite></a>
+  </span>
+  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()"
+    title="刷新">
+    <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<input type="hidden" id="groupid" name="groupid" value="0">
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-body ">
+          <form class="layui-form layui-col-space5">
+            <div class="layui-inline layui-show-xs-block">
+              <input class="layui-input" autocomplete="off" placeholder="关键词" name="keyword" id="keyword">
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <select lay-filter="state" name="state">
+                <option value="">全部状态</option>
+                <option value="0">正常</option>
+                <option value="1">封禁</option>
+              </select>
+            </div>
+            <div class="layui-inline layui-show-xs-block">
+              <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+          </form>
+        </div>
+        <div class="layui-card-body layui-table-body layui-table-main">
+          <table class="layui-table layui-form" id="datatable" lay-filter="datatable"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="add"><i
+        class="layui-icon">&#xe61f;</i>新增用户</button>
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <div class="layui-btn-group">
+    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="move">转移分组</button>
+    <button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</button>
+    <button class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</button>
+  </div>
+</script>
+{/block}
+{block name='script'}
+<script src="__ASSETS__/page/admin/user/index.js"></script>
+{/block}

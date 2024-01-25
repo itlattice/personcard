@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {block name="title"}
+    <title>{$webConfig.title} - {$webConfig.slogan}</title>
+    <meta name="Keywords" content="{$webConfig.keywords}">
+    <meta name="Description" content="{$webConfig.Description}">
+    {/block}
+    <link rel="stylesheet" type="text/css" href="__ASSETS__/css/layui.css?v=1.2.0" />
+    <link rel="stylesheet" href="__ASSETS__/css/main.css?v=1.2.0">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="__ASSETS__/page/css/style.css">
+    {block name='meta'}{/block}
+    <style>
+        .header .header-box .query a {
+            max-width: 45%;
+        }
+    </style>
+</head>
+<body>
+    {include file='common/header'/}
+    {block name='body'}
+    
+    {/block}
+    <script src="__ASSETS__/js/layui.js?v=1.2.0"></script>
+    <script src="__ASSETS__/js/jquery.min.js?v=1.2.0"></script>
+    <script src="__ASSETS__/js/main.js?v=1.2.0"></script>
+    <script src="__ASSETS__/js/jquery.qrcode.min.js?v=1.2.0"></script>
+    <script src="__STATIC__/shop/dist/uaredirect.js?v=1.2.0"></script>
+    <script src="__ASSETS__/js/common.js"></script>
+    {block name='script'}
+    {/block}
+    {include file='common/footer'}
+</body>
+</html>

@@ -1,0 +1,34 @@
+<div class="header">
+    <div class="layui-row">
+        <div class="layui-col-md8 layui-col-md-offset2 layui-col-sm12">
+            <div class="header-box">
+                <a href="/" style="max-width: 50%;">
+                    <img src="{$webConfig.logo}" alt="">
+                </a>
+                <div class="query" style="width: 50%; text-align: right;">
+                    <a href="/" class="layui-hide-xs">
+                        <i class="layui-icon layui-icon-home" style="font-size: 14px; font-weight: bold;"></i>
+                        <span>首页</span>
+                    </a>
+                    <a href="/order.html">
+                        <i class="layui-icon layui-icon-search"></i>
+                        <span>查看订单</span>
+                    </a>
+                    {if condition="$sysConfig.webOn.user eq 1"}
+                    {if condition="$isLogin eq false"}
+                    <a href="/login.html">
+                        <i class="layui-icon layui-icon-username"></i>
+                        <span>登录</span>
+                    </a>
+                    {else /}
+                    <a href="/loginout">
+                        <i class="layui-icon layui-icon-username"></i>
+                        <span>退出登录</span>
+                    </a>
+                    {/if}
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

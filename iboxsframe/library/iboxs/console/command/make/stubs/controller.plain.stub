@@ -1,0 +1,10 @@
+<?php
+
+namespace {%namespace%};
+
+use iboxs\Controller;
+
+class {%className%} extends Controller
+{
+    //
+}

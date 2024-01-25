@@ -1,0 +1,64 @@
+<?php
+
+namespace {%namespace%};
+
+use iboxs\Controller;
+use iboxs\Request;
+
+class {%className%} extends Controller
+{
+    /**
+     * 显示资源列表
+     *
+     * @return \iboxs\Response
+     */
+    public function index{%actionSuffix%}()
+    {
+        //
+    }
+
+    /**
+     * 保存新建的资源
+     *
+     * @param  \iboxs\Request  $request
+     * @return \iboxs\Response
+     */
+    public function save{%actionSuffix%}(Request $request)
+    {
+        //
+    }
+
+    /**
+     * 显示指定的资源
+     *
+     * @param  int  $id
+     * @return \iboxs\Response
+     */
+    public function read{%actionSuffix%}($id)
+    {
+        //
+    }
+
+    /**
+     * 保存更新的资源
+     *
+     * @param  \iboxs\Request  $request
+     * @param  int  $id
+     * @return \iboxs\Response
+     */
+    public function update{%actionSuffix%}(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * 删除指定资源
+     *
+     * @param  int  $id
+     * @return \iboxs\Response
+     */
+    public function delete{%actionSuffix%}($id)
+    {
+        //
+    }
+}

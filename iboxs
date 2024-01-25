@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+namespace iboxs;
+define('APP_PATH',__DIR__.'/app/');
+define('PUBLIC_PATH',__DIR__.'/public/');
+define('CONFIG_PATH',__DIR__.'/config/');
+define('LOG_PATH',__DIR__.'/runtime/');
+define('ROOT_PATH',__DIR__.'/');
+// 加载基础文件
+require __DIR__ . '/iboxsframe/base.php';
+
+// 应用初始化
+Container::get('app')->path(__DIR__ . '/app/')->initialize();
+
+// 控制台初始化
+Console::init();
